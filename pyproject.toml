@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "stripeljee-python"
+version = "0.1.0"
+description = ""
+authors = ["hoetmaaiers <robin.houdmeyers@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.105.0"
+uvicorn = {extras = ["standard"], version = "^0.24.0.post1"}
+sqlalchemy = "^2.0.23"
+alembic = "^1.13.0"
+psycopg2 = "^2.9.9"
+
+
+[tool.black]
+line-length = 79
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
