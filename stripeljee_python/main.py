@@ -1,4 +1,5 @@
-import crud
+ebugpyort crud
+import debugpy
 import models
 import schemas
 import uvicorn
@@ -73,4 +74,9 @@ def get_comics_for_serie(serie_id: int, db: Session = Depends(get_db)):
 
 
 if __name__ == "__main__":
+    # Start the debugger at a specific port (5678 in this example)
+    debugpy.listen(5678)
+    print("Waiting for debugger to attach...")
+    debugpy.wait_for_client()
+
     uvicorn.run("main:app", reload=True)
