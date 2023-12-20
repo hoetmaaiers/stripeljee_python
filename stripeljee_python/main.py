@@ -64,5 +64,13 @@ def update_serie(
     return db_serie
 
 
+@app.get("/series/{serie_id}/comics", response_model=list[schemas.Comic])
+def get_comics_for_serie(serie_id: int, db: Session = Depends(get_db)):
+    db_serie = crud.get_serie(db=db, serie_id=serie_id)
+    if db_serie is None:
+        raise HTTPException(status_code=404, detail="Serie not found")
+    return crud.get_comics_for_serie(db=db, serie_id=serie_id)
+
+
 if __name__ == "__main__":
     uvicorn.run("main:app", reload=True)

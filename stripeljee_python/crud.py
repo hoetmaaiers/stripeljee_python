@@ -96,3 +96,16 @@ def get_comics(
         .limit(limit)
         .all()
     )
+
+
+def get_comics_for_serie(
+    db: Session, skip: int = 0, limit: int = 100, serie_id: int = None
+):
+    return (
+        db.query(models.Comic)
+        .filter(models.Comic.serie_id == serie_id)
+        .order_by(models.Comic.id)
+        .offset(skip)
+        .limit(limit)
+        .all()
+    )
