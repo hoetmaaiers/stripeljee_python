@@ -23,9 +23,7 @@ def update_serie(
     serie_id: int,
     serie_data: schemas.SerieUpdate,
 ):
-    db_serie = (
-        db.query(models.Serie).filter(models.Serie.id == serie_id).first()
-    )
+    db_serie = db.query(models.Serie).filter(models.Serie.id == serie_id).first()
     if db_serie is None:
         return None
     for (
@@ -43,13 +41,7 @@ def get_series(
     skip: int = 0,
     limit: int = 100,
 ):
-    return (
-        db.query(models.Serie)
-        .order_by(models.Serie.id)
-        .offset(skip)
-        .limit(limit)
-        .all()
-    )
+    return db.query(models.Serie).order_by(models.Serie.id).offset(skip).limit(limit).all()
 
 
 def create_comic(
@@ -68,9 +60,7 @@ def update_comic(
     comic_id: int,
     comic_data: schemas.ComicUpdate,
 ):
-    db_comic = (
-        db.query(models.Comic).filter(models.Comic.id == comic_id).first()
-    )
+    db_comic = db.query(models.Comic).filter(models.Comic.id == comic_id).first()
     if db_comic is None:
         return None
     for (
@@ -98,9 +88,7 @@ def get_comics(
     )
 
 
-def get_comics_for_serie(
-    db: Session, skip: int = 0, limit: int = 100, serie_id: int = None
-):
+def get_comics_for_serie(db: Session, skip: int = 0, limit: int = 100, serie_id: int = None):
     return (
         db.query(models.Comic)
         .filter(models.Comic.serie_id == serie_id)

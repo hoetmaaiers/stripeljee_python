@@ -1,6 +1,5 @@
-ebugpyort crud
+import crud
 import debugpy
-import models
 import schemas
 import uvicorn
 from database import SessionLocal, engine
@@ -27,16 +26,12 @@ def get_comics(db: Session = Depends(get_db)):
 
 
 @app.post("/comics")
-def create_comic(
-    comic: schemas.ComicCreate, db: Session = Depends(get_db)
-) -> schemas.Comic:
+def create_comic(comic: schemas.ComicCreate, db: Session = Depends(get_db)) -> schemas.Comic:
     return crud.create_comic(db=db, comic=comic)
 
 
 @app.put("/comics/{comic_id}", response_model=schemas.Comic)
-def update_comic(
-    comic_id: int, comic: schemas.ComicUpdate, db: Session = Depends(get_db)
-):
+def update_comic(comic_id: int, comic: schemas.ComicUpdate, db: Session = Depends(get_db)):
     db_comic = crud.update_comic(db=db, comic_id=comic_id, comic_data=comic)
     if db_comic is None:
         raise HTTPException(status_code=404, detail="Comic not found")
@@ -56,9 +51,7 @@ def create_serie(serie: schemas.SerieCreate, db: Session = Depends(get_db)):
 
 
 @app.put("/series/{serie_id}", response_model=schemas.Serie)
-def update_serie(
-    serie_id: int, serie: schemas.SerieUpdate, db: Session = Depends(get_db)
-):
+def update_serie(serie_id: int, serie: schemas.SerieUpdate, db: Session = Depends(get_db)):
     db_serie = crud.update_serie(db=db, serie_id=serie_id, serie_data=serie)
     if db_serie is None:
         raise HTTPException(status_code=404, detail="Serie not found")
@@ -73,10 +66,10 @@ def get_comics_for_serie(serie_id: int, db: Session = Depends(get_db)):
     return crud.get_comics_for_serie(db=db, serie_id=serie_id)
 
 
-if __name__ == "__main__":
-    # Start the debugger at a specific port (5678 in this example)
-    debugpy.listen(5678)
-    print("Waiting for debugger to attach...")
-    debugpy.wait_for_client()
+def start():
+    """Launched with `poetry run start` at root level"""
+    uvicorn.run("main:app", reload=True, host='0.0.0.0')
 
-    uvicorn.run("main:app", reload=True)
+
+if __name__ == "__main__":
+    start()

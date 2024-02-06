@@ -5,13 +5,18 @@ description = ""
 authors = ["hoetmaaiers <robin.houdmeyers@gmail.com>"]
 readme = "README.md"
 
+[tool.poetry.scripts]
+server = "stripeljee_python.main:start"
+
 [tool.poetry.dependencies]
 python = "^3.11"
 fastapi = "^0.105.0"
 uvicorn = {extras = ["standard"], version = "^0.24.0.post1"}
 sqlalchemy = "^2.0.23"
-alembic = "^1.13.0"
 psycopg2 = "^2.9.9"
+ipyleaflet = "^0.18.1"
+dynaconf = "^3.2.4"
+alembic = "^1.13.1"
 
 
 [tool.poetry.group.dev.dependencies]
