@@ -41,7 +41,9 @@ def get_series(
     skip: int = 0,
     limit: int = 100,
 ):
-    return db.query(models.Serie).order_by(models.Serie.id).offset(skip).limit(limit).all()
+    return (
+        db.query(models.Serie).order_by(models.Serie.id).offset(skip).limit(limit).all()
+    )
 
 
 def create_comic(
@@ -88,7 +90,9 @@ def get_comics(
     )
 
 
-def get_comics_for_serie(db: Session, skip: int = 0, limit: int = 100, serie_id: int = None):
+def get_comics_for_serie(
+    db: Session, skip: int = 0, limit: int = 100, serie_id: int = None
+):
     return (
         db.query(models.Comic)
         .filter(models.Comic.serie_id == serie_id)

@@ -1,6 +1,7 @@
-from database import Base
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, func
 from sqlalchemy.orm import relationship
+
+from stripeljee_python.db import Base
 
 
 class TimestampsMixin:
