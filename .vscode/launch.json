@@ -13,7 +13,7 @@
         "stripeljee_python.main:app",
         "--reload",
         "--port",
-        "8020",
+        "8000",
       ],
       "jinja": true,
       "env": {

@@ -1,5 +1,6 @@
 import models
 import schemas
+from pydantic import BaseModel
 from sqlalchemy.orm import Session, joinedload
 
 
@@ -36,14 +37,21 @@ def update_serie(
     return db_serie
 
 
-def get_series(
-    db: Session,
-    skip: int = 0,
-    limit: int = 100,
-):
-    return (
-        db.query(models.Serie).order_by(models.Serie.id).offset(skip).limit(limit).all()
+def get_series(db: Session, offset: int = 0, limit: int = 100):
+    # Query to get the total number of rows
+    # total_rows = db.query(models.Serie).count()
+
+    # Query to get the paginated results
+    series = (
+        db.query(models.Serie)
+        .order_by(models.Serie.id)
+        .offset(offset)
+        .limit(limit)
+        .all()
     )
+
+    return series
+    # return {"data": series, "total": total_rows}
 
 
 def create_comic(
@@ -77,27 +85,27 @@ def update_comic(
 
 def get_comics(
     db: Session,
-    skip: int = 0,
+    offset: int = 0,
     limit: int = 100,
 ):
     return (
         db.query(models.Comic)
         .options(joinedload(models.Comic.serie))
         .order_by(models.Comic.id)
-        .offset(skip)
+        .offset(offset)
         .limit(limit)
         .all()
     )
 
 
 def get_comics_for_serie(
-    db: Session, skip: int = 0, limit: int = 100, serie_id: int = None
+    db: Session, offset: int = 0, limit: int = 100, serie_id: int = None
 ):
     return (
         db.query(models.Comic)
         .filter(models.Comic.serie_id == serie_id)
         .order_by(models.Comic.id)
-        .offset(skip)
+        .offset(offset)
         .limit(limit)
         .all()
     )
